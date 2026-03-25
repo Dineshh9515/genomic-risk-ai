@@ -12,7 +12,7 @@ export const sendWeeklyReport = inngest.createFunction(
 
     // Step 2: Generate and send reports
     for (const user of users) {
-      await step.run(`send-report-${(user as { id: string }).id}`, async () => {
+      await step.run(`send-report-${(user as unknown as { id: string }).id}`, async () => {
         // In production, compile weekly analysis summary and send via Resend
         return { sent: true };
       });

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useAppStore } from "@/lib/store";
 import RiskGauge from "@/components/charts/RiskGauge";
-import { Clock, Dna, ArrowRight, Trash2 } from "lucide-react";
+import { Clock, Dna, ArrowRight } from "lucide-react";
 
 export default function HistoryPage() {
   const { analyses } = useAppStore();

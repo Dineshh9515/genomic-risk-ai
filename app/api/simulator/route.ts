@@ -35,7 +35,7 @@ export async function POST(request: Request) {
       category,
       method: "Linear SHAP approximation (real-time)",
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

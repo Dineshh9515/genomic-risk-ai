@@ -36,7 +36,7 @@ export async function GET(request: Request) {
   try {
     const data = await fetchGWASAssociations(rsid);
     return NextResponse.json({ rsid, associations: data });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to fetch GWAS data" }, { status: 502 });
   }
 }

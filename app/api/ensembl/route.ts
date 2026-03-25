@@ -42,7 +42,7 @@ export async function GET(request: Request) {
         apiSource: "Ensembl REST API",
       });
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Ensembl API request failed" }, { status: 502 });
   }
 }

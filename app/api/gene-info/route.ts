@@ -37,7 +37,7 @@ export async function GET(request: Request) {
       })) || [],
       source: "mygene.info",
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "mygene.info request failed" }, { status: 502 });
   }
 }
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
       })),
       source: "mygene.info",
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

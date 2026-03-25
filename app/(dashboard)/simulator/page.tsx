@@ -23,19 +23,11 @@ export default function SimulatorPage() {
   const [counterfactualScore, setCounterfactualScore] = useState<number>(currentAnalysis?.riskScore || 0.5);
 
   const analysis = currentAnalysis;
-  if (!analysis) {
-    return (
-      <div className="max-w-4xl mx-auto text-center py-20">
-        <h2 className="font-headline text-2xl text-white mb-4">No Analysis Selected</h2>
-        <p className="font-mono text-sm text-neutral">Run an analysis first to use the simulator.</p>
-      </div>
-    );
-  }
-
-  const baselineScore = analysis.riskScore;
+  const baselineScore = analysis?.riskScore ?? 0.5;
 
   // Compute counterfactual score from SHAP values
   const computeCounterfactual = useCallback(() => {
+    if (!analysis) return;
     setComputing(true);
     setTimeout(() => {
       let score = baselineScore;
@@ -54,11 +46,20 @@ export default function SimulatorPage() {
       setCounterfactualScore(score);
       setComputing(false);
     }, 300);
-  }, [baselineScore, simulatorOverrides, analysis.shapValues, analysis.variantSuggestions]);
+  }, [baselineScore, simulatorOverrides, analysis]);
 
   useEffect(() => {
     computeCounterfactual();
   }, [computeCounterfactual]);
+
+  if (!analysis) {
+    return (
+      <div className="max-w-4xl mx-auto text-center py-20">
+        <h2 className="font-headline text-2xl text-white mb-4">No Analysis Selected</h2>
+        <p className="font-mono text-sm text-neutral">Run an analysis first to use the simulator.</p>
+      </div>
+    );
+  }
 
   const delta = counterfactualScore - baselineScore;
 

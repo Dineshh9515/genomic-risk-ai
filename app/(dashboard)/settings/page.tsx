@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { User, CreditCard, Bell, Shield, Key, Loader2 } from "lucide-react";
+import { User, CreditCard, Key, Loader2 } from "lucide-react";
 import PencilDivider from "@/components/layout/PencilDivider";
 import { createClient } from "@/lib/supabase/client";
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Bell, Search, User, Command, Settings, LogOut, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,7 +28,7 @@ export default function TopBar() {
   const [showProfile, setShowProfile] = useState(false);
   
   // Real user state
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ email?: string; user_metadata?: Record<string, string> } | null>(null);
 
   const notificationsRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
@@ -81,7 +82,7 @@ export default function TopBar() {
       <div className="flex items-center gap-3">
         <h1 className="font-headline text-xl text-white/90">{title}</h1>
         <span className="font-annotation text-sticky-yellow/50 text-sm hidden sm:block">
-          // lab notebook
+          {/* lab notebook */}
         </span>
       </div>
 
@@ -160,7 +161,7 @@ export default function TopBar() {
           >
             <div className="w-8 h-8 rounded-full border border-dashed border-stitch-border flex items-center justify-center bg-primary/10 overflow-hidden">
               {avatarUrl ? (
-                 <img src={avatarUrl} alt={displayName} className="w-full h-full object-cover" />
+                 <Image src={avatarUrl} alt={displayName} width={32} height={32} className="w-full h-full object-cover" unoptimized />
               ) : (
                 <User size={16} className="text-primary" />
               )}

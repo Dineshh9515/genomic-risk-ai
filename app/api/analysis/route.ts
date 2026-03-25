@@ -6,11 +6,12 @@ import {
   fetchClinVarData,
   fetchGeneInfo,
 } from "@/lib/bio-apis";
+import type { StringInteraction } from "@/lib/bio-apis";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { genes, snps, patientId } = body;
+    const { genes, snps } = body;
 
     if (!genes || !Array.isArray(genes) || genes.length === 0) {
       return NextResponse.json({ error: "genes array is required" }, { status: 400 });
@@ -124,12 +125,12 @@ export async function POST(request: Request) {
     // Build epistasis pairs from STRING interaction data
     const upperGenes = genes.map((g: string) => g.toUpperCase());
     const epistasisPairs = stringInteractions
-      .filter((interaction: any) => 
-        upperGenes.includes(interaction.preferredName_A?.toUpperCase?.() || "") && 
-        upperGenes.includes(interaction.preferredName_B?.toUpperCase?.() || "")
+      .filter((interaction: StringInteraction) => 
+        upperGenes.includes((interaction.preferredName_A || "").toUpperCase()) && 
+        upperGenes.includes((interaction.preferredName_B || "").toUpperCase())
       )
       .slice(0, 10)
-      .map((interaction: any) => ({
+      .map((interaction: StringInteraction) => ({
         gene1: interaction.preferredName_A,
         gene2: interaction.preferredName_B,
         interactionScore: interaction.score,

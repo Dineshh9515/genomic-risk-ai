@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import KnowledgeGraph from "@/components/graph/KnowledgeGraph";
 import { useAppStore } from "@/lib/store";
 import { motion } from "framer-motion";
-import { Command, Filter, Network, Loader2, Wifi, WifiOff } from "lucide-react";
+import { Command, Filter, Loader2, Wifi, WifiOff } from "lucide-react";
 import type { KnowledgeGraphNode, KnowledgeGraphEdge } from "@/types/gene";
 
 const pathwayFilters = [
@@ -15,7 +15,7 @@ const pathwayFilters = [
 
 export default function KnowledgeGraphPage() {
   const { currentAnalysis } = useAppStore();
-  const genes = currentAnalysis?.genes || ["TCF7L2", "FTO", "SLC30A8", "PPARG", "KCNJ11", "CDKAL1", "IGF2BP2", "MTNR1B"];
+  const genes = useMemo(() => currentAnalysis?.genes || ["TCF7L2", "FTO", "SLC30A8", "PPARG", "KCNJ11", "CDKAL1", "IGF2BP2", "MTNR1B"], [currentAnalysis?.genes]);
 
   const [nodes, setNodes] = useState<KnowledgeGraphNode[]>([]);
   const [edges, setEdges] = useState<KnowledgeGraphEdge[]>([]);

@@ -35,7 +35,7 @@ export async function GET(request: Request) {
       gwas: gwas.status === "fulfilled" ? gwas.value : null,
       sources: ["ClinVar (NCBI)", "myvariant.info", "GWAS Catalog (EBI)"],
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Variant lookup failed" }, { status: 502 });
   }
 }

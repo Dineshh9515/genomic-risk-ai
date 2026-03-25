@@ -32,7 +32,7 @@ export default function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedNode, setSelectedNode] = useState<KnowledgeGraphNode | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [highlightedNodes, setHighlightedNodes] = useState<Set<string>>(new Set());
+  const [, setHighlightedNodes] = useState<Set<string>>(new Set());
   const [dimensions, setDimensions] = useState({ width: 900, height: 600 });
 
   const getNodeColor = useCallback((riskScore: number) => {
@@ -119,24 +119,27 @@ export default function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
       .selectAll("g")
       .data(simNodes)
       .join("g")
-      .style("cursor", "pointer")
-      .call(
-        (d3.drag<any, any>()
-          .on("start", (event, d: any) => {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-          })
-          .on("drag", (event, d: any) => {
-            d.fx = event.x;
-            d.fy = event.y;
-          })
-          .on("end", (event, d: any) => {
-            if (!event.active) simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-          })) as any
-      );
+      .style("cursor", "pointer");
+
+    // Apply drag behavior (separate call avoids D3 generic type mismatch)
+    const dragBehavior = d3.drag<SVGGElement, SimNode>()
+      .on("start", (event, d) => {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      })
+      .on("drag", (event, d) => {
+        d.fx = event.x;
+        d.fy = event.y;
+      })
+      .on("end", (event, d) => {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      });
+    nodeGroup.each(function () {
+      d3.select<SVGGElement, SimNode>(this as SVGGElement).call(dragBehavior);
+    });
 
     // Gene nodes — circles with sketch filter
     nodeGroup.filter((d) => d.type === "gene").each(function (d) {

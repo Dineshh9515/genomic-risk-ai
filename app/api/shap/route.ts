@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchOpenTargetsT2DM, fetchVariantInfo, fetchClinVarData } from "@/lib/bio-apis";
+import { fetchOpenTargetsT2DM } from "@/lib/bio-apis";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

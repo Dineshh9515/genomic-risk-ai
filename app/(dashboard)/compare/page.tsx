@@ -5,8 +5,7 @@ import { motion } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import RiskGauge from "@/components/charts/RiskGauge";
 import ShapWaterfall from "@/components/charts/ShapWaterfall";
-import PencilDivider from "@/components/layout/PencilDivider";
-import { GitCompare, ArrowRight } from "lucide-react";
+import { GitCompare } from "lucide-react";
 
 export default function ComparePage() {
   const { analyses, compareIds, setCompareIds } = useAppStore();

@@ -10,7 +10,7 @@ export default function CommandBar() {
   const { commandBarOpen, setCommandBarOpen } = useAppStore();
   const [query, setQuery] = useState("");
   const [searching, setSearching] = useState(false);
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<{ symbol: string; name: string }[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -140,7 +140,7 @@ export default function CommandBar() {
                     ))
                   ) : (
                     <div className="px-3 py-4 text-center text-sm font-mono text-neutral/70">
-                      No genes found matching "{query}"
+                      No genes found matching &quot;{query}&quot;
                     </div>
                   )}
                 </div>
